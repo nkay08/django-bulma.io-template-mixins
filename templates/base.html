@@ -1,0 +1,46 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" xmlns="http://www.w3.org/1999/html" class="nojs">
+<head>
+    <meta charset="UTF-8" class="has-navbar-fixed-top">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+
+    {% block head%}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.css" integrity="sha256-XF2msWsEjJwE8ORQ0exG5nFk8jDTntTMbUZKtvPRkgU=" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css">
+            {{ form.media.css }}
+        {% endblock %}
+        {% block scripts %}
+{#            {% static 'js' %}#}
+            <script src="{% static 'js/topnav_menu_toggle.js' %}"></script>
+            <script
+			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			  crossorigin="anonymous"></script>
+        {% endblock %}
+    {% endblock %}
+</head>
+<body>
+<div class="">
+{% include 'home/topnav.html' %}
+</div>
+<br>
+<div class="section">
+    <div class="container is-fluid">
+            {% block content %}
+            {% endblock %}
+    </div>
+</div>
+
+
+{#{% include 'home/footer.html' %}#}
+{% block extra_body %}
+{% endblock %}
+{{ form.media.js }}
+</body>
+</html>
