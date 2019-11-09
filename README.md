@@ -2,7 +2,7 @@
 Django template mixins for css framework bulma.io
 
 Just a collection of useful example templates for bulma.io.
-
+## Form-mixins
 Form-mixins can be used with:  
 `{% include 'form-mixins/form.html' %}` or `{% include 'form-mixins/form_card.html' %}`  
 `with` optional parameters:  
