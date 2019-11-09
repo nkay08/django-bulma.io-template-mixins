@@ -1,0 +1,53 @@
+<div class="card">
+    <header class="card-header">
+        <div class="card-header-title">
+            <!-- TITLE -->
+        </div>
+    </header>
+    <div class="card-content">
+        <form action="" method="post">
+            {% csrf_token %}
+
+            {% for hidden_field in form.hidden_fields %}
+              {{ hidden_field }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                {% include 'form-mixins/form_field_widget.html' with field=field horizontal=form_horizontal %}
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+              <div class="is-danger" role="alert">
+                {% for error in form.non_field_errors %}
+                  {{ error }}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% if form_horizontal %}
+            <div class="field is-horizontal">
+                  <div class="field-label">
+                    <!-- Left empty for spacing -->
+                  </div>
+                    <div class="field-body">
+            {% endif %}
+                        <div class="field is-grouped">
+                            <p class="control">
+                            {% for button_name, button_type in form.buttons.items %}
+                                  <button class="button is-primary" type="{{ button_type }}">
+                                      {{ button_name }}
+                                  </button>
+                            {% endfor %}
+
+                            <!--  EXTRA BUTTONS -->
+                            </p>
+                        </div>
+            {% if form_horizontal %}
+                    </div>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+    <div class="card-footer">
+
+    </div>
+</div>

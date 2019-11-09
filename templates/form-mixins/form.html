@@ -1,0 +1,69 @@
+      {% load i18n %}
+      {% load honeypot %}
+
+        <form action="{{ form_url }}" method="{% if form_method %}{{ form_method }}{% else %}post{% endif %}">
+        {% csrf_token %}
+
+        {% render_honeypot_field "family_name" %}
+
+
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+
+
+        {% for hidden_field in form.hidden_fields %}
+          {{ hidden_field }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+            {% include 'form-mixins/form_field_widget.html' with field=field horizontal=form_horizontal %}
+        {% endfor %}
+
+        {% include 'form-mixins/non_field_errors.html' %}
+
+
+        {% if form.buttons %}
+            {% if form_horizontal %}
+            <div class="field is-horizontal">
+                  <div class="field-label">
+                    <!-- Left empty for spacing -->
+                  </div>
+                    <div class="field-body">
+            {% endif %}
+                        <div class="field is-grouped">
+                            <p class="control">
+                            {% for button_name, button_type in form.buttons.items %}
+                                  <button class="button is-primary" type="{{ button_type }}">
+                                      {{ button_name }}
+                                  </button>
+                            {% endfor %}
+                            </p>
+                        </div>
+            {% if form_horizontal %}
+                    </div>
+            </div>
+            {% endif %}
+        {% else %}
+            {% if not no_button %}
+                {% if form_horizontal %}
+                <div class="field is-horizontal">
+                      <div class="field-label">
+                        <!-- Left empty for spacing -->
+                      </div>
+                        <div class="field-body">
+                {% endif %}
+                            <div class="field is-grouped">
+                                <p class="control">
+                                      <button {% if form_submit_name %}name="{{ form_submit_name }}"{% endif %}class="button is-primary" type="submit">
+                                          {% trans "OK" %}
+                                      </button>
+                                </p>
+                            </div>
+                {% if form_horizontal %}
+                        </div>
+                </div>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        </form>
