@@ -1,0 +1,34 @@
+{% load utils_extras %}
+{% load i18n %}
+
+<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+    {% if  page_obj.has_previous %}
+        <a href="?{% url_replace request 'page' page_obj.previous_page_number %}" class="pagination-previous" ><i class="la la-chevron-left"></i></a>
+        <ul class="pagination-list">
+        <li><a href="?{% url_replace request 'page' 1 %}" class="pagination-link" aria-label="Goto first page"><i class="la la-angle-double-left"></i></a></li>
+    {% else %}
+        <a class="pagination-previous" disabled><i class="la la-chevron-left"></i></a>
+        <ul class="pagination-list">
+        <li><a  class="pagination-link" aria-label="Goto first page" disabled><i class="la la-angle-double-left"></i></a></li>
+    {% endif %}
+
+        {% for i in paginator.page_range %}
+            {% if i >= page_obj.number|add:"-3" and i <= page_obj.number|add:"3" %}
+                <li><a href="?{% url_replace request 'page' i %}" class="pagination-link {% ifequal page_obj.number i %}is-current{% endifequal %}" aria-label="Goto page {{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.number != paginator.page_range|last %}
+
+        {% endif %}
+
+    {% if  page_obj.has_next %}
+        <li><a href="?{% url_replace request 'page' paginator.page_range|last %}" class="pagination-link" aria-label="Goto last page"><i class="la la-angle-double-right"></i></a></li>
+        </ul>
+        <a href="?{% url_replace request 'page' page_obj.next_page_number %}" class="pagination-next" ><i class="la la-chevron-right"></i></a>
+    {% else %}
+        <li><a class="pagination-link" aria-label="Goto last page" disabled=><i class="la la-angle-double-right"></i></a></li>
+        </ul>
+        <a class="pagination-next" disabled><i class="la la-chevron-right"></i></a>
+    {% endif %}
+
+</nav>
